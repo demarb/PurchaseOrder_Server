@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import model.*;
 
@@ -64,6 +65,7 @@ public class Server {
 			
 			String action = "";
 			User userObj = new User();
+			Product productObj = new Product();
 			
 			try {
 				while(true) {
@@ -96,6 +98,17 @@ public class Server {
 //							System.out.println("User ID: " + userObj.getuser_id());
 //							System.out.println("User Password: " + userObj.getPassword());
 							
+							
+						}else if (action.equalsIgnoreCase("Employee- Check Inventory")) {
+							System.out.println("Action received: "+ action);
+							ArrayList<Product> productListObj = new ArrayList<Product>();
+							productListObj = productObj.getAllProducts();
+							System.out.println("Test server output");
+							for (int i=0; i<productListObj.size(); i++) {
+								productListObj.get(i).toString();
+							}
+
+							objOs.writeObject(productListObj);
 							
 						}
 					}
