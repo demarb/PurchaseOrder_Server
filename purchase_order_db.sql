@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2022 at 07:38 AM
+-- Generation Time: Oct 30, 2022 at 12:36 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -21,6 +21,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `purchase_order_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `item_id` int(11) NOT NULL,
+  `item_name` varchar(30) COLLATE utf8_unicode_520_ci NOT NULL,
+  `item_max` int(11) NOT NULL,
+  `item_current` int(11) NOT NULL,
+  `item_reorder_status` varchar(30) COLLATE utf8_unicode_520_ci NOT NULL DEFAULT 'In stock'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`item_id`, `item_name`, `item_max`, `item_current`, `item_reorder_status`) VALUES
+(1, 'Standford Calculator', 50, 11, 'In stock'),
+(2, 'Hertz Pencil', 500, 6, 'In stock'),
+(3, 'Papermate Pen', 0, 0, 'In stock'),
+(4, 'Blank Sheets (100pk)', 150, 100, 'In stock'),
+(5, 'Eraser', 1000, 200, 'In stock'),
+(6, 'Novel: H.King- Dreaming', 25, 9, 'In stock'),
+(7, 'Paper Clip', 80, 46, 'In stock'),
+(8, 'Marker', 100, 33, 'In stock'),
+(9, 'Book Wrapper', 40, 10, 'In stock'),
+(10, 'Marvel Puzzle- Age 6+', 60, 30, 'In stock');
 
 -- --------------------------------------------------------
 
@@ -53,6 +83,12 @@ INSERT INTO `user` (`user_id`, `password`, `f_name`, `l_name`, `role`) VALUES
 --
 
 --
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`item_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -61,6 +97,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user`
