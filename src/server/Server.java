@@ -110,6 +110,20 @@ public class Server {
 
 							objOs.writeObject(productListObj);
 							
+						}else if (action.equalsIgnoreCase("Employee- Update Inventory")) {
+							System.out.println("Action received: "+ action);
+							
+							String itemID = (String) objIs.readObject();
+							String itemCurrent = (String) objIs.readObject();
+							System.out.println("Attempting to update "+itemID+  " with the value: "+itemCurrent);
+							
+							if (productObj.updateProduct(itemID, itemCurrent)){
+								objOs.writeObject(true);
+							}else {
+								objOs.writeObject(false);
+							}
+							
+							
 						}
 					}
 					catch (IOException ex) {

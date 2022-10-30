@@ -125,7 +125,30 @@ public class Product implements Serializable{
 		return productList;
 	}
 	
-	
+	public boolean updateProduct(String itemID, String itemCurrent) {		
+		query = "UPDATE product SET item_current=? WHERE product.item_id=?";
+		boolean rowCheck = false;
+		try {
+			stmt = dbConn.prepareStatement(query);
+			stmt.setInt(1, Integer.parseInt(itemCurrent));
+			stmt.setInt(2, Integer.parseInt(itemID));
+			
+			int rowChange = stmt.executeUpdate();
+			System.out.println("Row Change: "+rowChange+ " rows");
+			
+			if(rowChange>=1) {
+				rowCheck=true;
+			}else {
+				rowCheck=false;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		}
+		return rowCheck;
+	}
 	
 	
 	
