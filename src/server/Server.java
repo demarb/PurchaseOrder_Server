@@ -64,16 +64,21 @@ public class Server {
 			System.out.println("Thread is now running");
 			
 			String action = "";
-			User userObj = new User();
-			Product productObj = new Product();
+			User userObj;
+			Product productObj;
+			Requisition requisitionObj;
 			
 			try {
 				while(true) {
 					try {
+						
+						
+						
 
 						action = (String) objIs.readObject();
 						
 						if (action.equalsIgnoreCase("Login")) {
+							userObj = new User();
 							System.out.println("Action received: "+ action);
 							
 							String login_id = (String) objIs.readObject();
@@ -88,18 +93,13 @@ public class Server {
 								objOs.writeObject(userObj);
 							}else{
 								objOs.writeObject(false);
-							};
+							}
 							
 							
-							
-							
-//							userObj.setuser_id((String) objIs.readObject());
-//							userObj.setPassword((String) objIs.readObject());
-//							System.out.println("User ID: " + userObj.getuser_id());
-//							System.out.println("User Password: " + userObj.getPassword());
 							
 							
 						}else if (action.equalsIgnoreCase("Employee- Check Inventory")) {
+							productObj = new Product();
 							System.out.println("Action received: "+ action);
 							ArrayList<Product> productListObj = new ArrayList<Product>();
 							productListObj = productObj.getAllProducts();
@@ -111,6 +111,7 @@ public class Server {
 							objOs.writeObject(productListObj);
 							
 						}else if (action.equalsIgnoreCase("Employee- Update Inventory")) {
+							productObj = new Product();
 							System.out.println("Action received: "+ action);
 							
 							String itemID = (String) objIs.readObject();
@@ -124,7 +125,21 @@ public class Server {
 							}
 							
 							
+						}else if (action.equalsIgnoreCase("Employee- Create Requisition")) {
+							requisitionObj = new Requisition();
+							
+							System.out.println("Action received: "+ action);
+							
+							requisitionObj = (Requisition) objIs.readObject();
+							if(requisitionObj.addRequisition(requisitionObj)) {
+								objOs.writeObject(true);
+							}else {
+								objOs.writeObject(false);
+							}
+							
+							
 						}
+						
 					}
 					catch (IOException ex) {
 						ex.printStackTrace();

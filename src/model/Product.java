@@ -36,7 +36,7 @@ public class Product implements Serializable{
 	 */
 	
 	public Product() {
-		this.dbConn = new DatabaseConnection().getDBConnection();
+		this.dbConn = null;
 		
 		this.item_id = 0;
 		this.item_name = "";
@@ -98,7 +98,9 @@ public class Product implements Serializable{
 		ArrayList<Product> productList = new ArrayList<Product>();
 		
 		query = "Select * from product";
+		this.dbConn = new DatabaseConnection().getDBConnection();
 		try {
+//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = dbConn.prepareStatement(query);
 			resSet = stmt.executeQuery();
 			
@@ -118,6 +120,16 @@ public class Product implements Serializable{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			this.dbConn= null;
+				
+		
+			
+//			try {
+//				this.dbConn.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
 		}
 		
 		System.out.println("product list size: "+ productList.size());
@@ -128,7 +140,9 @@ public class Product implements Serializable{
 	public boolean updateProduct(String itemID, String itemCurrent) {		
 		query = "UPDATE product SET item_current=? WHERE product.item_id=?";
 		boolean rowCheck = false;
+		this.dbConn = new DatabaseConnection().getDBConnection();
 		try {
+//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = dbConn.prepareStatement(query);
 			stmt.setInt(1, Integer.parseInt(itemCurrent));
 			stmt.setInt(2, Integer.parseInt(itemID));
@@ -146,6 +160,16 @@ public class Product implements Serializable{
 			
 			e.printStackTrace();
 			
+		}finally {
+			this.dbConn= null;
+				
+		
+			
+//			try {
+//				this.dbConn.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
 		}
 		return rowCheck;
 	}

@@ -105,8 +105,11 @@ public class User implements Serializable{
 	}
 	
 	public boolean checkLogin(String login_id, String login_password) {
+		
 		query = "Select * from user where user_id= ?";
+//		this.dbConn = new DatabaseConnection().getDBConnection();
 		try {
+//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = dbConn.prepareStatement(query);
 			stmt.setInt(1, Integer.parseInt(login_id));
 			resultSet = stmt.executeQuery();
@@ -122,21 +125,20 @@ public class User implements Serializable{
 			System.out.println(this.toString());
 			
 			
-			
-			
-//			if(resultSet.next()) {
-//				this.setuser_id(resultSet.getString(1));
-//				this.setPassword(resultSet.getString(1));
-//				this.setf_name(resultSet.getString(1));
-//				this.setl_name(resultSet.getString(1));
-//				this.setRole(resultSet.getString(1));
-//			}
-//			
+
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} //finally {
+//			try {
+//				this.dbConn.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+		
 		System.out.println("INSIDE FINALLY login_password: "+login_password);
 		System.out.println("INSIDE FINALLY user_password: "+this.getPassword());
 		
