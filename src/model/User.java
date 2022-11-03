@@ -17,7 +17,7 @@ public class User implements Serializable{
 	private String l_name;
 	private String role;
 	
-	private transient Connection dbConn;
+//	private transient Connection dbConn;
 	
 	private transient String query;
 	private transient PreparedStatement stmt;
@@ -34,7 +34,7 @@ public class User implements Serializable{
 	
 	//Constructors
 	public User() {
-		this.dbConn = new DatabaseConnection().getDBConnection();
+//		this.dbConn = new DatabaseConnection().getDBConnection();
 		
 		this.user_id = "";
 		this.password = "";
@@ -110,7 +110,8 @@ public class User implements Serializable{
 //		this.dbConn = new DatabaseConnection().getDBConnection();
 		try {
 //			this.dbConn = new DatabaseConnection().getDBConnection();
-			stmt = dbConn.prepareStatement(query);
+			stmt = DatabaseConnection.conn.prepareStatement(query);
+//			stmt = dbConn.prepareStatement(query);
 			stmt.setInt(1, Integer.parseInt(login_id));
 			resultSet = stmt.executeQuery();
 			

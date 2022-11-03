@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2022 at 12:36 AM
+-- Generation Time: Nov 03, 2022 at 06:08 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -43,14 +43,40 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`item_id`, `item_name`, `item_max`, `item_current`, `item_reorder_status`) VALUES
 (1, 'Standford Calculator', 50, 11, 'In stock'),
 (2, 'Hertz Pencil', 500, 6, 'In stock'),
-(3, 'Papermate Pen', 0, 0, 'In stock'),
+(3, 'Papermate Pen', 400, 0, 'In stock'),
 (4, 'Blank Sheets (100pk)', 150, 100, 'In stock'),
 (5, 'Eraser', 1000, 200, 'In stock'),
 (6, 'Novel: H.King- Dreaming', 25, 9, 'In stock'),
 (7, 'Paper Clip', 80, 46, 'In stock'),
-(8, 'Marker', 100, 33, 'In stock'),
-(9, 'Book Wrapper', 40, 10, 'In stock'),
-(10, 'Marvel Puzzle- Age 6+', 60, 30, 'In stock');
+(8, 'Marker', 100, 1, 'In stock'),
+(9, 'Book Wrapper', 40, 35, 'In stock'),
+(10, 'Marvel Puzzle- Age 6+', 60, 25, 'In stock');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requisition`
+--
+
+CREATE TABLE `requisition` (
+  `req_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `quantity` double NOT NULL,
+  `unit_price` double NOT NULL,
+  `total_price` double NOT NULL,
+  `supplier_name` varchar(30) COLLATE utf8_unicode_520_ci NOT NULL,
+  `supplier_tel` varchar(30) COLLATE utf8_unicode_520_ci NOT NULL,
+  `supplier_email` varchar(30) COLLATE utf8_unicode_520_ci NOT NULL,
+  `associated_emp` varchar(60) COLLATE utf8_unicode_520_ci NOT NULL,
+  `req_status` varchar(30) COLLATE utf8_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+
+--
+-- Dumping data for table `requisition`
+--
+
+INSERT INTO `requisition` (`req_id`, `item_id`, `quantity`, `unit_price`, `total_price`, `supplier_name`, `supplier_tel`, `supplier_email`, `associated_emp`, `req_status`) VALUES
+(1, 8, 50, 60, 3000, 'Matrix', '8763210923', 'info@matrix.com', 'Brittany Wilson', 'Processing');
 
 -- --------------------------------------------------------
 
@@ -89,6 +115,13 @@ ALTER TABLE `product`
   ADD PRIMARY KEY (`item_id`);
 
 --
+-- Indexes for table `requisition`
+--
+ALTER TABLE `requisition`
+  ADD PRIMARY KEY (`req_id`),
+  ADD KEY `item_id` (`item_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -105,10 +138,26 @@ ALTER TABLE `product`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `requisition`
+--
+ALTER TABLE `requisition`
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `requisition`
+--
+ALTER TABLE `requisition`
+  ADD CONSTRAINT `FK_Requisition_Product` FOREIGN KEY (`item_id`) REFERENCES `product` (`item_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
