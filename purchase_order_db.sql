@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2022 at 06:08 AM
+-- Generation Time: Nov 06, 2022 at 11:06 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -46,11 +46,31 @@ INSERT INTO `product` (`item_id`, `item_name`, `item_max`, `item_current`, `item
 (3, 'Papermate Pen', 400, 0, 'In stock'),
 (4, 'Blank Sheets (100pk)', 150, 100, 'In stock'),
 (5, 'Eraser', 1000, 200, 'In stock'),
-(6, 'Novel: H.King- Dreaming', 25, 9, 'In stock'),
+(6, 'Novel: H.King- Dreaming', 25, 5, 'In stock'),
 (7, 'Paper Clip', 80, 46, 'In stock'),
 (8, 'Marker', 100, 1, 'In stock'),
 (9, 'Book Wrapper', 40, 35, 'In stock'),
 (10, 'Marvel Puzzle- Age 6+', 60, 25, 'In stock');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `purchase_order`
+--
+
+CREATE TABLE `purchase_order` (
+  `po_id` int(11) NOT NULL,
+  `req_id` int(11) NOT NULL,
+  `approving_emp` varchar(60) COLLATE utf8_unicode_520_ci NOT NULL,
+  `dateTime` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+
+--
+-- Dumping data for table `purchase_order`
+--
+
+INSERT INTO `purchase_order` (`po_id`, `req_id`, `approving_emp`, `dateTime`) VALUES
+(1, 3, 'Shelly Stewart', '2022-11-06 20:26:57');
 
 -- --------------------------------------------------------
 
@@ -76,7 +96,9 @@ CREATE TABLE `requisition` (
 --
 
 INSERT INTO `requisition` (`req_id`, `item_id`, `quantity`, `unit_price`, `total_price`, `supplier_name`, `supplier_tel`, `supplier_email`, `associated_emp`, `req_status`) VALUES
-(1, 8, 50, 60, 3000, 'Matrix', '8763210923', 'info@matrix.com', 'Brittany Wilson', 'Processing');
+(1, 8, 50, 60, 3000, 'Matrix', '8763210923', 'info@matrix.com', 'Brittany Wilson', 'Deny'),
+(2, 3, 200, 15, 3000, 'Papermate', '19542210986', 'order@papermate.us', 'John Doe', 'Processing'),
+(3, 6, 20, 1200, 24000, 'Carlong Puublishers', '17705421244', 'sales@carlongpub.com', 'John Doe', 'Approve');
 
 -- --------------------------------------------------------
 
@@ -98,9 +120,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `password`, `f_name`, `l_name`, `role`) VALUES
 (1, 'password', 'John', 'Doe', 'employee'),
-(3, 'testing321', 'Matthew', 'Clover', 'supervisor'),
 (4, 'testing123', 'Brittany', 'Wilson', 'employee'),
-(5, 'donthackme', 'Jonny', 'English', 'supervisor'),
 (6, 'irvin23', 'Tiff', 'Irvin', 'accounts'),
 (7, 'rocket45', 'Shelly', 'Stewart', 'accounts');
 
@@ -113,6 +133,13 @@ INSERT INTO `user` (`user_id`, `password`, `f_name`, `l_name`, `role`) VALUES
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`item_id`);
+
+--
+-- Indexes for table `purchase_order`
+--
+ALTER TABLE `purchase_order`
+  ADD PRIMARY KEY (`po_id`),
+  ADD KEY `req_id` (`req_id`);
 
 --
 -- Indexes for table `requisition`
@@ -138,10 +165,16 @@ ALTER TABLE `product`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `purchase_order`
+--
+ALTER TABLE `purchase_order`
+  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `requisition`
 --
 ALTER TABLE `requisition`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -152,6 +185,12 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `purchase_order`
+--
+ALTER TABLE `purchase_order`
+  ADD CONSTRAINT `FK_PurchaseOrder_Requisition` FOREIGN KEY (`req_id`) REFERENCES `requisition` (`req_id`);
 
 --
 -- Constraints for table `requisition`

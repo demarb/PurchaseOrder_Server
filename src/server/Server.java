@@ -67,6 +67,7 @@ public class Server {
 			User userObj;
 			Product productObj;
 			Requisition requisitionObj;
+			PurchaseOrder purchaseOrderObj;
 			
 			try {
 				while(true) {
@@ -140,7 +141,9 @@ public class Server {
 							
 						}else if (action.equalsIgnoreCase("Accounts- Check Requisition and PO")) {
 							requisitionObj = new Requisition();
+							purchaseOrderObj = new PurchaseOrder();
 							System.out.println("Action received: "+ action);
+							
 							ArrayList<Requisition> requisitionListObj = new ArrayList<Requisition>();
 							requisitionListObj = requisitionObj.getAllRequisitions();
 							System.out.println("Test server output");
@@ -149,6 +152,44 @@ public class Server {
 							}
 
 							objOs.writeObject(requisitionListObj);
+							
+							ArrayList<PurchaseOrder> PO_ListObj = new ArrayList<PurchaseOrder>();
+							PO_ListObj = purchaseOrderObj.getAllPO();
+							System.out.println("Test server output");
+							for (int i=0; i<PO_ListObj.size(); i++) {
+								PO_ListObj.get(i).toString();
+							}
+							
+							objOs.writeObject(PO_ListObj);
+							
+						}else if (action.equalsIgnoreCase("Accounts- Create PO/Deny Requisition")) {
+							requisitionObj = new Requisition();
+							purchaseOrderObj = new PurchaseOrder();
+							
+							
+							System.out.println("Action received: "+ action);
+							
+							String req_id = (String) objIs.readObject();
+							String changeReqStatus = (String) objIs.readObject();
+							String approvingEmp = (String) objIs.readObject();
+							
+							if(changeReqStatus.equals("Approve")) {
+								if(purchaseOrderObj.addPO(req_id, approvingEmp)) {
+									if(requisitionObj.updateRequisition(req_id, changeReqStatus)) {
+										objOs.writeObject(true);
+									}
+								}else {
+									objOs.writeObject(false);
+								}
+							}else if(changeReqStatus.equals("Deny")) {
+								if(requisitionObj.updateRequisition(req_id, changeReqStatus)) {
+									objOs.writeObject(true);
+								}else {
+									objOs.writeObject(false);
+								}
+							}
+							
+							
 							
 						}
 						

@@ -265,9 +265,48 @@ public class Requisition  implements Serializable{
 //			}
 //		}
 		
-		System.out.println("product list size: "+ requisitionList.size());
-		System.out.println("product list print: "+ requisitionList.toString());
+		System.out.println("REQ list size: "+ requisitionList.size());
+		System.out.println("REQ list print: "+ requisitionList.toString());
 		return requisitionList;
+	}
+	
+	
+	public boolean updateRequisition(String req_id, String changeReqStatus) {		
+		query = "UPDATE requisition SET req_status=? WHERE requisition.req_id=?";
+		boolean rowCheck = false;
+//		this.dbConn = new DatabaseConnection().getDBConnection();
+		try {
+//			this.dbConn = new DatabaseConnection().getDBConnection();
+			stmt = DatabaseConnection.conn.prepareStatement(query);
+//			stmt = dbConn.prepareStatement(query);
+			stmt.setString(1, changeReqStatus);
+			stmt.setInt(2, Integer.parseInt(req_id));
+			
+			int rowChange = stmt.executeUpdate();
+			System.out.println("Row Change: "+rowChange+ " rows");
+			
+			if(rowChange>=1) {
+				rowCheck=true;
+			}else {
+				rowCheck=false;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		}//finally {
+//			this.dbConn= null;
+				
+		
+			
+//			try {
+//				this.dbConn.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+		return rowCheck;
 	}
 
 
