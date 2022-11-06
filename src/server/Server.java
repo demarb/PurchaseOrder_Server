@@ -138,6 +138,18 @@ public class Server {
 							}
 							
 							
+						}else if (action.equalsIgnoreCase("Accounts- Check Requisition and PO")) {
+							requisitionObj = new Requisition();
+							System.out.println("Action received: "+ action);
+							ArrayList<Requisition> requisitionListObj = new ArrayList<Requisition>();
+							requisitionListObj = requisitionObj.getAllRequisitions();
+							System.out.println("Test server output");
+							for (int i=0; i<requisitionListObj.size(); i++) {
+								requisitionListObj.get(i).toString();
+							}
+
+							objOs.writeObject(requisitionListObj);
+							
 						}
 						
 					}

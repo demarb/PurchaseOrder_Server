@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import factories.DatabaseConnection;
 
@@ -27,7 +28,7 @@ public class Requisition  implements Serializable{
 
 	private transient String query;
 	private transient PreparedStatement stmt;
-	private transient ResultSet resultSet;
+	private transient ResultSet resSet;
 	private static final long serialVersionUID = 754667564345345745L;
 	
 	
@@ -216,7 +217,58 @@ public class Requisition  implements Serializable{
 	}
 	
 
-	
+	public ArrayList getAllRequisitions() {
+		ArrayList<Requisition> requisitionList = new ArrayList<Requisition>();
+		
+//		query = "Select * from requisition";
+		query = "SELECT requisition.*, product.item_name FROM requisition INNER JOIN product ON requisition.item_id=product.item_id";
+//		this.dbConn = new DatabaseConnection().getDBConnection();
+		try {
+//			this.dbConn = new DatabaseConnection().getDBConnection();
+			stmt = DatabaseConnection.conn.prepareStatement(query);
+//			stmt = dbConn.prepareStatement(query);
+			resSet = stmt.executeQuery();
+			
+			
+			while(resSet.next()) {
+				Requisition requisitionObj = new Requisition();
+				requisitionObj.setReq_id(Integer.parseInt(resSet.getString("req_id")));
+				requisitionObj.setItem_id(Integer.parseInt(resSet.getString("item_id")));
+				
+				requisitionObj.setItem_name(resSet.getString("item_name"));
+				
+				requisitionObj.setQuantity(Double.parseDouble(resSet.getString("quantity")));
+				requisitionObj.setUnit_price(Double.parseDouble(resSet.getString("unit_price")));
+				requisitionObj.setTotal_price(Double.parseDouble(resSet.getString("total_price")));
+				requisitionObj.setSupplier_name(resSet.getString("supplier_name"));
+				requisitionObj.setSupplier_tel(resSet.getString("supplier_tel"));
+				requisitionObj.setSupplier_email(resSet.getString("supplier_email"));
+				requisitionObj.setAssociated_emp(resSet.getString("associated_emp"));
+				requisitionObj.setReq_status(resSet.getString("req_status"));
+				requisitionList.add(requisitionObj);
+				
+				System.out.println(requisitionObj.toString());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//finally {
+//			this.dbConn= null;
+				
+		
+			
+//			try {
+//				this.dbConn.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+		
+		System.out.println("product list size: "+ requisitionList.size());
+		System.out.println("product list print: "+ requisitionList.toString());
+		return requisitionList;
+	}
 
 
 
