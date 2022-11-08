@@ -81,6 +81,7 @@ public class Product implements Serializable{
 	
 	
 	public ArrayList getAllProducts() {
+		System.out.println("[PRODUCT] : Getting all Products from Database");
 		ArrayList<Product> productList = new ArrayList<Product>();
 		query = "Select * from product";
 		
@@ -96,20 +97,20 @@ public class Product implements Serializable{
 				productObj.setitem_current(Integer.parseInt(resSet.getString("item_current")));
 				productObj.setitem_reorder_status(resSet.getString("item_reorder_status"));
 				productList.add(productObj);
-				
-				System.out.println(productObj.toString());
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println("product list size: "+ productList.size());
-		System.out.println("product list print: "+ productList.toString());
+		System.out.println("[PRODUCT] : Stream of Products being sent to requesting client");
+		System.out.println("[PRODUCT] : "+ productList.toString());
 		return productList;
 	}
 	
-	public boolean updateProduct(String itemID, String itemCurrent) {		
+	public boolean updateProduct(String itemID, String itemCurrent) {	
+		System.out.println("[PRODUCT] : Updating a Product in Database");
+		System.out.println("[PRODUCT] : Attempting to Update Item No. "+ itemID + " with Quantity Value- " + itemCurrent);
 		query = "UPDATE product SET item_current=? WHERE product.item_id=?";
 		boolean rowCheck = false;
 		try {
@@ -118,7 +119,7 @@ public class Product implements Serializable{
 			stmt.setInt(2, Integer.parseInt(itemID));
 			
 			int rowChange = stmt.executeUpdate();
-			System.out.println("Row Change: "+rowChange+ " rows");
+			System.out.println("[DATABASE] : " + rowChange + " Rows were affected.");
 			
 			if(rowChange>=1) {
 				rowCheck=true;

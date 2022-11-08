@@ -13,7 +13,7 @@ public class DatabaseConnection {
 		try {
 			if (conn == null) {
 				conn = DriverManager.getConnection(url, "root", "");
-				System.out.println("Database connection successfully made.");
+				System.out.println("[DATABASE] : Database Connection made successfully");
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

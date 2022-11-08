@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2022 at 11:06 PM
+-- Generation Time: Nov 08, 2022 at 05:55 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `product` (
   `item_id` int(11) NOT NULL,
-  `item_name` varchar(30) COLLATE utf8_unicode_520_ci NOT NULL,
+  `item_name` varchar(60) COLLATE utf8_unicode_520_ci NOT NULL,
   `item_max` int(11) NOT NULL,
   `item_current` int(11) NOT NULL,
   `item_reorder_status` varchar(30) COLLATE utf8_unicode_520_ci NOT NULL DEFAULT 'In stock'
@@ -47,10 +47,25 @@ INSERT INTO `product` (`item_id`, `item_name`, `item_max`, `item_current`, `item
 (4, 'Blank Sheets (100pk)', 150, 100, 'In stock'),
 (5, 'Eraser', 1000, 200, 'In stock'),
 (6, 'Novel: H.King- Dreaming', 25, 5, 'In stock'),
-(7, 'Paper Clip', 80, 46, 'In stock'),
+(7, 'Paper Clip', 80, 47, 'In stock'),
 (8, 'Marker', 100, 1, 'In stock'),
 (9, 'Book Wrapper', 40, 35, 'In stock'),
-(10, 'Marvel Puzzle- Age 6+', 60, 25, 'In stock');
+(10, 'Marvel Puzzle- Age 6+', 60, 30, 'In stock'),
+(11, 'Rubber', 100, 20, 'In stock'),
+(12, 'Triple Ink Pen', 50, 40, 'In stock'),
+(13, 'Geometry Set', 60, 11, 'In stock'),
+(14, 'Plastic Clear Ruler', 500, 204, 'In stock'),
+(15, 'Correction Pen (WhiteOut)', 55, 23, 'In stock'),
+(16, 'Wooden Ruler', 36, 34, 'In stock'),
+(17, 'Note Journal', 30, 1, 'In stock'),
+(18, 'Sticky Pad', 100, 99, 'In stock'),
+(19, 'Three Subject Notebook', 80, 49, 'In stock'),
+(20, 'Crayon (20 clr pk)', 50, 21, 'In stock'),
+(21, 'StoryTime for Toddlers - E. Myers', 80, 33, 'In stock'),
+(22, 'The Internet for Dummies - C. Hendricks', 25, 5, 'In stock'),
+(23, 'Glue Stick Medium', 120, 99, 'In stock'),
+(24, 'Craft Paper - 25 pk', 50, 4, 'In stock'),
+(25, 'Ledger', 150, 50, 'In stock');
 
 -- --------------------------------------------------------
 
@@ -162,7 +177,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `purchase_order`

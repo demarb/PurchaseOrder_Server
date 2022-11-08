@@ -102,21 +102,14 @@ public class User implements Serializable{
 				this.setl_name(resultSet.getString("l_name"));
 				this.setRole(resultSet.getString("role"));
 			}
-			
-			System.out.println(this.toString());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println("INSIDE FINALLY login_password: "+login_password);
-		System.out.println("INSIDE FINALLY user_password: "+this.getPassword());
-		
 		if(login_password.equals(this.getPassword())) {
-			System.out.println("Login true final block reached");
 			return true;
 		}else {
-			System.out.println("Login false final block reached");
 			return false;
 		}
 
