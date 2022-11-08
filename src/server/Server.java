@@ -15,10 +15,7 @@ public class Server {
 	private ServerSocket serverSocket;
 	private Socket connectionSocket;
 	private int activeClientCount;
-	
 
-	
-	
 	public Server() {
 		try{
 			serverSocket = new ServerSocket (7000);
@@ -72,9 +69,6 @@ public class Server {
 			try {
 				while(true) {
 					try {
-						
-						
-						
 
 						action = (String) objIs.readObject();
 						
@@ -95,10 +89,7 @@ public class Server {
 							}else{
 								objOs.writeObject(false);
 							}
-							
-							
-							
-							
+
 						}else if (action.equalsIgnoreCase("Employee- Check Inventory")) {
 							productObj = new Product();
 							System.out.println("Action received: "+ action);
@@ -188,9 +179,7 @@ public class Server {
 									objOs.writeObject(false);
 								}
 							}
-							
-							
-							
+
 						}
 						
 					}
@@ -200,7 +189,6 @@ public class Server {
 					catch (Exception ex) {
 						ex.printStackTrace();
 					}
-				
 				}
 			}catch(Exception e) {
 				e.printStackTrace();

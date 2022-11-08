@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +22,6 @@ public class Requisition  implements Serializable{
 	private String supplier_email;
 	private String associated_emp;
 	private String req_status;
-	
-//	private transient Connection dbConn;
 
 	private transient String query;
 	private transient PreparedStatement stmt;
@@ -33,12 +30,6 @@ public class Requisition  implements Serializable{
 	
 	
 	public Requisition() {
-//		this.dbConn = null;
-//		this.setDbConn(null);
-//		this.setDbConn(DatabaseConnection.getDBConnection());
-		
-//		this.dbConn = new DatabaseConnection().getDBConnection();
-		
 		this.req_id = 0;
 		this.item_id = 0;
 		this.item_name = "";
@@ -51,14 +42,6 @@ public class Requisition  implements Serializable{
 		this.associated_emp = "";
 		this.req_status = "";
 	}
-	
-//	public Connection getDbConn() {
-//		return dbConn;
-//	}
-//
-//	public void setDbConn(Connection dbConn) {
-//		this.dbConn = dbConn;
-//	}
 
 	public Requisition(int req_id, int item_id, String item_name, float quantity, float unit_price, float total_price,
 			String supplier_name, String supplier_tel, String supplier_email, String associated_emp,
@@ -177,11 +160,8 @@ public class Requisition  implements Serializable{
 		query = "INSERT into requisition (item_id, quantity, unit_price, total_price, supplier_name, supplier_tel, supplier_email, "
 				+ "associated_emp, req_status) VALUES(?,?,?,?,?,?,?,?,?)";
 		boolean rowCheck = false;
-//		this.dbConn = new DatabaseConnection().getDBConnection();
 		try {
-//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = DatabaseConnection.conn.prepareStatement(query);
-//			stmt = dbConn.prepareStatement(query);
 			stmt.setInt(1, requisitionObj.getItem_id());
 			stmt.setDouble(2, requisitionObj.getQuantity());
 			stmt.setDouble(3, requisitionObj.getUnit_price());
@@ -191,7 +171,6 @@ public class Requisition  implements Serializable{
 			stmt.setString(7, requisitionObj.getSupplier_email());
 			stmt.setString(8, requisitionObj.getAssociated_emp());
 			stmt.setString(9, requisitionObj.getReq_status());
-			
 			
 			int rowChange = stmt.executeUpdate();
 			System.out.println("Row Change: "+rowChange+ " rows");
@@ -203,32 +182,20 @@ public class Requisition  implements Serializable{
 			}
 			
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
-			
-		}//finally {
-//			try {
-//				this.dbConn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		}
 		return rowCheck;
 	}
 	
 
 	public ArrayList getAllRequisitions() {
 		ArrayList<Requisition> requisitionList = new ArrayList<Requisition>();
-		
-//		query = "Select * from requisition";
+
 		query = "SELECT requisition.*, product.item_name FROM requisition INNER JOIN product ON requisition.item_id=product.item_id";
-//		this.dbConn = new DatabaseConnection().getDBConnection();
+		
 		try {
-//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = DatabaseConnection.conn.prepareStatement(query);
-//			stmt = dbConn.prepareStatement(query);
 			resSet = stmt.executeQuery();
-			
 			
 			while(resSet.next()) {
 				Requisition requisitionObj = new Requisition();
@@ -251,19 +218,8 @@ public class Requisition  implements Serializable{
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}//finally {
-//			this.dbConn= null;
-				
-		
-			
-//			try {
-//				this.dbConn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		}
 		
 		System.out.println("REQ list size: "+ requisitionList.size());
 		System.out.println("REQ list print: "+ requisitionList.toString());
@@ -274,11 +230,8 @@ public class Requisition  implements Serializable{
 	public boolean updateRequisition(String req_id, String changeReqStatus) {		
 		query = "UPDATE requisition SET req_status=? WHERE requisition.req_id=?";
 		boolean rowCheck = false;
-//		this.dbConn = new DatabaseConnection().getDBConnection();
 		try {
-//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = DatabaseConnection.conn.prepareStatement(query);
-//			stmt = dbConn.prepareStatement(query);
 			stmt.setString(1, changeReqStatus);
 			stmt.setInt(2, Integer.parseInt(req_id));
 			
@@ -295,21 +248,7 @@ public class Requisition  implements Serializable{
 			
 			e.printStackTrace();
 			
-		}//finally {
-//			this.dbConn= null;
-				
-		
-			
-//			try {
-//				this.dbConn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		}
 		return rowCheck;
 	}
-
-
-
-	
 }

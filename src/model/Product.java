@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,26 +17,13 @@ public class Product implements Serializable{
 	private int item_current;
 	private String item_reorder_status;
 	
-//	private transient Connection dbConn;
-	
 	private transient String query;
 	private transient PreparedStatement stmt;
 	private transient ResultSet resSet;
 	private static final long serialVersionUID = 643453457546675745L;
 	
-	
 	//Constructors 
-	/**
-	 * @param item_id
-	 * @param item_name
-	 * @param item_max
-	 * @param item_current
-	 * @param item_reorder_status
-	 */
-	
 	public Product() {
-//		this.dbConn = null;
-		
 		this.item_id = 0;
 		this.item_name = "";
 		this.item_max = 0;
@@ -96,15 +82,11 @@ public class Product implements Serializable{
 	
 	public ArrayList getAllProducts() {
 		ArrayList<Product> productList = new ArrayList<Product>();
-		
 		query = "Select * from product";
-//		this.dbConn = new DatabaseConnection().getDBConnection();
+		
 		try {
-//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = DatabaseConnection.conn.prepareStatement(query);
-//			stmt = dbConn.prepareStatement(query);
 			resSet = stmt.executeQuery();
-			
 			
 			while(resSet.next()) {
 				Product productObj = new Product();
@@ -119,19 +101,8 @@ public class Product implements Serializable{
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}//finally {
-//			this.dbConn= null;
-				
-		
-			
-//			try {
-//				this.dbConn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		}
 		
 		System.out.println("product list size: "+ productList.size());
 		System.out.println("product list print: "+ productList.toString());
@@ -141,11 +112,8 @@ public class Product implements Serializable{
 	public boolean updateProduct(String itemID, String itemCurrent) {		
 		query = "UPDATE product SET item_current=? WHERE product.item_id=?";
 		boolean rowCheck = false;
-//		this.dbConn = new DatabaseConnection().getDBConnection();
 		try {
-//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = DatabaseConnection.conn.prepareStatement(query);
-//			stmt = dbConn.prepareStatement(query);
 			stmt.setInt(1, Integer.parseInt(itemCurrent));
 			stmt.setInt(2, Integer.parseInt(itemID));
 			
@@ -162,20 +130,8 @@ public class Product implements Serializable{
 			
 			e.printStackTrace();
 			
-		}//finally {
-//			this.dbConn= null;
-				
-		
-			
-//			try {
-//				this.dbConn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		}
 		return rowCheck;
 	}
-	
-	
 	
 }

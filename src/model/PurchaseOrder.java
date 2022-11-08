@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import factories.DatabaseConnection;
@@ -15,8 +13,6 @@ public class PurchaseOrder implements Serializable{
 	private int po_id;
 	private int req_id;
 	private String approving_emp;
-//	private LocalDate currentDate; //LocalDate.now()
-//	private LocalDateTime currentTime; // LocalDateTime.now(); // currentTime.getHour()
 	private String dateTime;
 	
 	private int item_id;
@@ -131,10 +127,6 @@ public class PurchaseOrder implements Serializable{
 		this.req_status = req_status;
 	}
 
-	
-	
-	
-
 	public int getPo_id() {
 		return po_id;
 	}
@@ -180,14 +172,10 @@ public class PurchaseOrder implements Serializable{
 	public boolean addPO(String req_id, String approvingEmp) {
 		query = "INSERT into purchase_order (req_id, approving_emp) VALUES(?,?)";
 		boolean rowCheck = false;
-//		this.dbConn = new DatabaseConnection().getDBConnection();
 		try {
-//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = DatabaseConnection.conn.prepareStatement(query);
-//			stmt = dbConn.prepareStatement(query);
 			stmt.setInt(1, Integer.parseInt(req_id));
 			stmt.setString(2, approvingEmp);
-			
 			
 			int rowChange = stmt.executeUpdate();
 			System.out.println("Row Change: "+rowChange+ " rows");
@@ -202,40 +190,25 @@ public class PurchaseOrder implements Serializable{
 			
 			e.printStackTrace();
 			
-		}//finally {
-//			try {
-//				this.dbConn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		}
 		return rowCheck;
 	}
 	
 	public ArrayList getAllPO() {
 		ArrayList<PurchaseOrder> PO_List = new ArrayList<PurchaseOrder>();
 		
-//		query = "Select * from requisition";
-//		query = "SELECT requisition.*, product.item_name FROM requisition INNER JOIN product ON requisition.item_id=product.item_id";
 		query = "SELECT purchase_order.*, requisition.*, product.item_name FROM purchase_order INNER JOIN requisition ON purchase_order.req_id=requisition.req_id"
 				+ " INNER JOIN product ON requisition.item_id=product.item_id";
 
-//		this.dbConn = new DatabaseConnection().getDBConnection();
 		try {
-//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = DatabaseConnection.conn.prepareStatement(query);
-//			stmt = dbConn.prepareStatement(query);
 			resSet = stmt.executeQuery();
-			
 			
 			while(resSet.next()) {
 				PurchaseOrder purchaseOrderObj = new PurchaseOrder();
 				purchaseOrderObj.setPo_id(Integer.parseInt(resSet.getString("po_id")));
 				purchaseOrderObj.setApproving_emp(resSet.getString("approving_emp"));
 				purchaseOrderObj.setDateTime(resSet.getString("dateTime"));
-				
-				
-				
 				purchaseOrderObj.setReq_id(Integer.parseInt(resSet.getString("req_id")));
 				purchaseOrderObj.setItem_id(Integer.parseInt(resSet.getString("item_id")));
 				
@@ -248,26 +221,14 @@ public class PurchaseOrder implements Serializable{
 				purchaseOrderObj.setSupplier_tel(resSet.getString("supplier_tel"));
 				purchaseOrderObj.setSupplier_email(resSet.getString("supplier_email"));
 				purchaseOrderObj.setAssociated_emp(resSet.getString("associated_emp"));
-//				purchaseOrderObj.setReq_status(resSet.getString("req_status"));
 				PO_List.add(purchaseOrderObj);
 				
 				System.out.println(purchaseOrderObj.toString());
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}//finally {
-//			this.dbConn= null;
-				
-		
-			
-//			try {
-//				this.dbConn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		}
 		
 		System.out.println("PO list size: "+ PO_List.size());
 		System.out.println("PO list print: "+ PO_List.toString());

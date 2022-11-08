@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,31 +16,18 @@ public class User implements Serializable{
 	private String l_name;
 	private String role;
 	
-//	private transient Connection dbConn;
-	
 	private transient String query;
 	private transient PreparedStatement stmt;
 	private transient ResultSet resultSet;
 	private static final long serialVersionUID = 546675745643453457L;
 	
-	/**
-	 * @param user_id
-	 * @param password
-	 * @param f_name
-	 * @param l_name
-	 * @param role
-	 */
-	
 	//Constructors
 	public User() {
-//		this.dbConn = new DatabaseConnection().getDBConnection();
-		
 		this.user_id = "";
 		this.password = "";
 		this.f_name = "";
 		this.l_name = "";
 		this.role = "";
-		
 	}
 	
 	public User(String user_id, String password, String f_name, String l_name, String role) {
@@ -52,8 +38,6 @@ public class User implements Serializable{
 		this.l_name = l_name;
 		this.role = role;
 	}
-
-	
 
 	//Getters and setters
 	public String getuser_id() {
@@ -97,21 +81,17 @@ public class User implements Serializable{
 	}
 
 
-
 	@Override
 	public String toString() {
 		return "User [user_id=" + user_id + ", password=" + password + ", f_name=" + f_name + ", l_name=" + l_name + ", role="
 				+ role + "]";
 	}
 	
-	public boolean checkLogin(String login_id, String login_password) {
-		
+	public boolean checkLogin(String login_id, String login_password) {	
 		query = "Select * from user where user_id= ?";
-//		this.dbConn = new DatabaseConnection().getDBConnection();
+
 		try {
-//			this.dbConn = new DatabaseConnection().getDBConnection();
 			stmt = DatabaseConnection.conn.prepareStatement(query);
-//			stmt = dbConn.prepareStatement(query);
 			stmt.setInt(1, Integer.parseInt(login_id));
 			resultSet = stmt.executeQuery();
 			
@@ -124,21 +104,10 @@ public class User implements Serializable{
 			}
 			
 			System.out.println(this.toString());
-			
-			
 
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} //finally {
-//			try {
-//				this.dbConn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
+		}
 		
 		System.out.println("INSIDE FINALLY login_password: "+login_password);
 		System.out.println("INSIDE FINALLY user_password: "+this.getPassword());
@@ -153,13 +122,4 @@ public class User implements Serializable{
 
 	}
 
-	
-//	public static void main(String[] args) {
-//		User user = new User();
-//		user.checkLogin();
-//	}
-	
-	
-	
-	
 }
