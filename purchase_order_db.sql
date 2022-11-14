@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2022 at 05:55 AM
+-- Generation Time: Nov 14, 2022 at 02:31 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -57,7 +57,7 @@ INSERT INTO `product` (`item_id`, `item_name`, `item_max`, `item_current`, `item
 (14, 'Plastic Clear Ruler', 500, 204, 'In stock'),
 (15, 'Correction Pen (WhiteOut)', 55, 23, 'In stock'),
 (16, 'Wooden Ruler', 36, 34, 'In stock'),
-(17, 'Note Journal', 30, 1, 'In stock'),
+(17, 'Note Journal', 30, 11, 'In stock'),
 (18, 'Sticky Pad', 100, 99, 'In stock'),
 (19, 'Three Subject Notebook', 80, 49, 'In stock'),
 (20, 'Crayon (20 clr pk)', 50, 21, 'In stock'),
@@ -85,7 +85,9 @@ CREATE TABLE `purchase_order` (
 --
 
 INSERT INTO `purchase_order` (`po_id`, `req_id`, `approving_emp`, `dateTime`) VALUES
-(1, 3, 'Shelly Stewart', '2022-11-06 20:26:57');
+(1, 3, 'Shelly Stewart', '2022-11-06 20:26:57'),
+(2, 4, 'Tiff Irvin', '2022-11-11 21:41:30'),
+(3, 5, 'Tiff Irvin', '2022-11-12 01:18:59');
 
 -- --------------------------------------------------------
 
@@ -113,7 +115,9 @@ CREATE TABLE `requisition` (
 INSERT INTO `requisition` (`req_id`, `item_id`, `quantity`, `unit_price`, `total_price`, `supplier_name`, `supplier_tel`, `supplier_email`, `associated_emp`, `req_status`) VALUES
 (1, 8, 50, 60, 3000, 'Matrix', '8763210923', 'info@matrix.com', 'Brittany Wilson', 'Deny'),
 (2, 3, 200, 15, 3000, 'Papermate', '19542210986', 'order@papermate.us', 'John Doe', 'Processing'),
-(3, 6, 20, 1200, 24000, 'Carlong Puublishers', '17705421244', 'sales@carlongpub.com', 'John Doe', 'Approve');
+(3, 6, 20, 1200, 24000, 'Carlong Puublishers', '17705421244', 'sales@carlongpub.com', 'John Doe', 'Approve'),
+(4, 5, 300, 20, 6000, 'Dupri', '8765435857', 'order@dupri.com', 'John Doe', 'Approve'),
+(5, 17, 10, 1200, 12000, 'Indies Booking', '8667677567', 'info@indies.com', 'Brittany Wilson', 'Approve');
 
 -- --------------------------------------------------------
 
@@ -183,13 +187,13 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `purchase_order`
 --
 ALTER TABLE `purchase_order`
-  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `requisition`
 --
 ALTER TABLE `requisition`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
