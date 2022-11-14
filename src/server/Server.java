@@ -1,12 +1,15 @@
 package server;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
+import factories.DatabaseConnection;
 import model.*;
 
 public class Server {
@@ -25,6 +28,7 @@ public class Server {
 				connectionSocket = serverSocket.accept();
 				ClientHandler client = new ClientHandler(connectionSocket);
 				client.start();
+				System.out.println("[CLIENT] : New Client Connected - "+ connectionSocket.getRemoteSocketAddress().toString());
 				activeClientCount++;
 				System.out.println("[ACTIVE CLIENTS] : "+ activeClientCount);
 				
@@ -58,7 +62,7 @@ public class Server {
 		
 		@Override
 		public void run() {
-			System.out.println("[CLIENT] : New Client Connected");
+			
 			
 			String action = "";
 			User userObj;
@@ -167,6 +171,27 @@ public class Server {
 
 						}
 						
+					}catch (NullPointerException ex) {
+						ex.printStackTrace();
+					}
+					catch (ClassNotFoundException ex) {
+						ex.printStackTrace();
+					}
+					catch (ClassCastException ex) {
+						ex.printStackTrace();
+					}
+					catch (SocketException ex) {
+						clientSocket.close();
+						System.out.println("[CLIENT] : Client Disconnected");
+						activeClientCount--;
+						System.out.println("[ACTIVE CLIENTS] : "+ activeClientCount);
+						break;
+					}catch (EOFException ex) {
+						clientSocket.close();
+						System.out.println("[CLIENT] : Client Disconnected");
+						activeClientCount--;
+						System.out.println("[ACTIVE CLIENTS] : "+ activeClientCount);
+						break;
 					}
 					catch (IOException ex) {
 						ex.printStackTrace();
@@ -174,10 +199,13 @@ public class Server {
 					catch (Exception ex) {
 						ex.printStackTrace();
 					}
+					
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
-			}
+			}//finally {
+//				DatabaseConnection.closeDatabaseConnection();
+//			}
 			
 		}
 

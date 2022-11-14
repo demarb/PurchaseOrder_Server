@@ -20,5 +20,19 @@ public class DatabaseConnection {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-	}	
+	}
+	
+	public static void closeDatabaseConnection(){
+        if (conn != null){
+            try{
+            	conn.close();
+            }
+            catch(SQLException s){
+                s.printStackTrace();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 }
